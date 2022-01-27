@@ -10,6 +10,11 @@ class Property
     @data = JSON.parse(File.read("data/properties.json"))
     @hash = Hash.new
   end
+
+  def get_image(property)
+    property.css('div.slider_container').css('img').map { |img| img.attribute('src').value }
+  end
+
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
       next if li.text.strip == ""
@@ -17,6 +22,7 @@ class Property
       @hash[:title] = li.css('h2.title').text.strip
       @hash[:price] = li.css('p.price').text
       @data["data"].push(@hash)
+      @hash = Hash.new
     end
   end
 
