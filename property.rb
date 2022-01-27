@@ -59,6 +59,11 @@ class Property
       @hash[:garages]= ""
       @hash[:years_old]= ""
       
+      property_html = Nokogiri::HTML(open("https://www.laencontre.com.pe" + li.css('h2.title').css('a').attribute('href').value))
+      @hash[:original_pictures] = get_image(property_html)
+      @hash[:property_type] = get_type(property_html)
+      @hash[:location] = get_location(property_html)
+      
       @data["data"].push(@hash)
       @hash = Hash.new
     end
