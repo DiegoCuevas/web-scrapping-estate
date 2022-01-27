@@ -48,7 +48,17 @@ class Property
       next if li.text.strip == ""
       @hash[:id] = "LE-" + li.css('h2.title').css('a').attribute('href').value.split("/")[-1]
       @hash[:title] = li.css('h2.title').text.strip
-      @hash[:price] = li.css('p.price').text
+      @hash[:original_url] = "https://www.laencontre.com.pe" + li.css('h2.title').css('a').attribute('href').value
+      @hash[:usd_price] = li.css('p.price').text
+      @hash[:local_price] = ""
+      @hash[:description] = li.css('p.descripcion').text.strip
+      @hash[:total_area] = li.css('li.dimensions').text.strip
+      @hash[:build_area] = li.css('li.dimensions').text.strip
+      @hash[:bedrooms]= li.css('li.bedrooms').text.strip 
+      @hash[:bathrooms]= li.css('li.bathrooms').text.strip 
+      @hash[:garages]= ""
+      @hash[:years_old]= ""
+      
       @data["data"].push(@hash)
       @hash = Hash.new
     end
