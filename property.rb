@@ -1,7 +1,7 @@
 require 'json'
 require 'nokogiri'
 require 'open-uri'
-require 'pry'
+require 'geocoder'
 
 class Property
   def initialize(url)
@@ -63,7 +63,7 @@ class Property
       @hash[:original_pictures] = get_image(property_html)
       @hash[:property_type] = get_type(property_html)
       @hash[:location] = get_location(property_html)
-      
+
       @data["data"].push(@hash)
       @hash = Hash.new
     end
@@ -75,5 +75,3 @@ class Property
     end
   end
 end 
-
-# html = Nokogiri::HTML(open("https://www.laencontre.com.pe/agente/palo-alto-inmobiliaria-37195/venta/propiedades"))
