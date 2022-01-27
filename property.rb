@@ -15,6 +15,12 @@ class Property
     property.css('div.slider_container').css('img').map { |img| img.attribute('src').value }
   end
 
+  def get_type(property)
+    type = property.css('div#firstLine').css('h1').text.strip.split(" ")[0]
+    {:name => type , :slug => type.downcase} 
+  end
+
+
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
       next if li.text.strip == ""
