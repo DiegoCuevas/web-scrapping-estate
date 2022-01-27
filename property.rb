@@ -46,9 +46,10 @@ class Property
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
       next if li.text.strip == ""
-      @hash[:id] = "LE-" + li.css('h2.title').css('a').attribute('href').value.split("/")[-1]
+      title = li.css('h2.title').css('a').attribute('href').value
+      @hash[:id] = "LE-" + title.split("/")[-1]
       @hash[:title] = li.css('h2.title').text.strip
-      @hash[:original_url] = "https://www.laencontre.com.pe" + li.css('h2.title').css('a').attribute('href').value
+      @hash[:original_url] = "https://www.laencontre.com.pe" + title
       @hash[:usd_price] = li.css('p.price').text
       @hash[:local_price] = ""
       @hash[:description] = li.css('p.descripcion').text.strip
@@ -59,7 +60,7 @@ class Property
       @hash[:garages]= ""
       @hash[:years_old]= ""
       
-      property_html = Nokogiri::HTML(open("https://www.laencontre.com.pe" + li.css('h2.title').css('a').attribute('href').value))
+      property_html = Nokogiri::HTML(open("https://www.laencontre.com.pe" + title))
       @hash[:original_pictures] = get_image(property_html)
       @hash[:property_type] = get_type(property_html)
       @hash[:location] = get_location(property_html)
