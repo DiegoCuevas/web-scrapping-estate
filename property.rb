@@ -12,6 +12,8 @@ class Property
   end
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
+      next if li.text.strip == ""
+      @hash[:id] = "LE-" + li.css('h2.title').css('a').attribute('href').value.split("/")[-1]
       @hash[:title] = li.css('h2.title').text.strip
       @hash[:price] = li.css('p.price').text
       @data["data"].push(@hash)
