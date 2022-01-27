@@ -1,4 +1,4 @@
-# Script para traer las transacciones con más monto de cada mercado
+# Script para recopilar todos los anuncios del Catalogo que Tasso tiene
 ​
 ## Antes de empezar
 Necesitas tener instalado:
