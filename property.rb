@@ -43,16 +43,23 @@ class Property
     }
   end
 
+  def validate_id(id)
+     @data["data"].any?{|h| h["id"] == id}
+  end
+
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
-      next if li.text.strip == ""
+      next if li.text.strip == "" 
+      
       title = li.css('h2.title').css('a').attribute('href').value
-      @hash[:id] = "LE-" + title.split("/")[-1]
+      id = "LE-" + title.split("/")[-1]
+      next if validate_id(id)
+      @hash[:id] = id
       @hash[:title] = li.css('h2.title').text.strip
       @hash[:original_url] = "https://www.laencontre.com.pe" + title
       price = li.css('p.price').text
-      @hash[:usd_price] = price.include?("$") ? price.strip : ""
-      @hash[:local_price] = price.include?("S/") ? price.strip : ""
+      @hash[:usd_price] = price.include?("$") ? price.gsub("$","").strip : nil
+      @hash[:local_price] = price.include?("S/") ? price.gsub("S/","").strip : nil
       @hash[:description] = li.css('p.descripcion').text.strip
       @hash[:total_area] = li.css('li.dimensions').text.strip
       @hash[:build_area] = li.css('li.dimensions').text.strip
@@ -72,6 +79,7 @@ class Property
   end
 
   def generate_json
+    get_property_info
      File.open("data/properties.json","w") do |f|
       f.write(@data.to_json)
     end
