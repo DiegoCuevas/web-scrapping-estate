@@ -50,8 +50,9 @@ class Property
       @hash[:id] = "LE-" + title.split("/")[-1]
       @hash[:title] = li.css('h2.title').text.strip
       @hash[:original_url] = "https://www.laencontre.com.pe" + title
-      @hash[:usd_price] = li.css('p.price').text
-      @hash[:local_price] = ""
+      price = li.css('p.price').text
+      @hash[:usd_price] = price.strip if price.include?("$")
+      @hash[:local_price] = price.strip if price.include?("S/")
       @hash[:description] = li.css('p.descripcion').text.strip
       @hash[:total_area] = li.css('li.dimensions').text.strip
       @hash[:build_area] = li.css('li.dimensions').text.strip
