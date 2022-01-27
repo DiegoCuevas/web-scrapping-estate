@@ -1,4 +1,4 @@
-# Script para recopilar todos los anuncios del Catalogo que Tasso tiene
+# Script para recopilar todos los anuncios del Catalogo que tiene Tasso.
 ​
 ## Antes de empezar
 Necesitas tener instalado:
