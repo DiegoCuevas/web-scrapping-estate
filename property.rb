@@ -20,6 +20,28 @@ class Property
     {:name => type , :slug => type.downcase} 
   end
 
+  def get_location(property)
+    lat = property.css('button#see-map').attribute('data-x').value
+    lng = property.css('button#see-map').attribute('data-y').value
+    location = Geocoder.search([lat,lng]).first
+    {
+      :address => location.data["display_name"],
+      :country => location.data["address"]["country"],
+      :region => location.data["address"]["state"],
+      :province => location.data["address"]["region"],
+      :district => location.data["address"]["city"],
+      :zone => '',
+      :geo_point => {
+          :lat => lat,
+          :lon => lng
+      },
+      :country_slug => location.data["address"]["country"].downcase ,
+      :region_slug => location.data["address"]["state"].downcase ,
+      :province_slug => location.data["address"]["region"].downcase ,
+      :district_slug => location.data["address"]["city"].downcase ,
+      :zone_slug => ''
+    }
+  end
 
   def get_property_info
     @html.css("ul.listado-viviendas").children.to_a.each do |li|
