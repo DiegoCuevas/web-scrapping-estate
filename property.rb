@@ -18,7 +18,10 @@ class Property
       @hash[:price] = li.css('p.price').text
       @data["data"].push(@hash)
     end
-    File.open("data/properties.json","w") do |f|
+  end
+
+  def generate_json
+     File.open("data/properties.json","w") do |f|
       f.write(@data.to_json)
     end
   end
